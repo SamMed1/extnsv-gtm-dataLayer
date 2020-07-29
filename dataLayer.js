@@ -8,15 +8,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	window.dataLayer = window.dataLayer || [];
 	console.log('Data layer script loaded successfully');
 
-
 	// **  Define static variables to be used by specific pages.
 	// [1] Dragon Professional Individual page
+	const dragonProfessional = document.getElementById("dragon-professional");
 	// [2] Another page
+	const pageName = document.getElementById("############");
 	// [3] Another page
+	const pageName2 = document.getElementById("############");
 
 	// [1]
-	if (document.getElementById("dragon-professional")) {
-
+	if ( dragonProfessional ) {
 		// Define static variables.
 		var gtm_pageName = 'Dragon Professional Individual 15';
 		var gtm_brand = 'Dragon';
@@ -30,7 +31,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		var pid_spanish = '5228063700';
 		var pid_french = '5228064000';
 	}
-
 
 	// ** Call functions to generate our dynamic variables are calculated depending on user selection, eg price.
 	// [1] Generate variable for currency.
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		var gtm_currencyCode = checkCurrency(); // Pull in currency code.
 
 		// Checkbox 1
-		var checkBox1 = document.getElementById("check1");
+		const checkBox1 = document.getElementById("check1");
 		if (checkBox1.checked) {
 			var addBluetoothHeadset = true;
 		} else {
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		}
 
 		// Checkbox 2
-		var checkBox2 = document.getElementById("check2");
+		const checkBox2 = document.getElementById("check2");
 		if (checkBox2.checked) {
 			var addPowermic = true;
 		} else {
@@ -126,7 +126,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 		return [addBluetoothHeadset, addPowermic, bluetoothHeadsetCost, powermicCost];
 	}
-
 
 	// ** Store the data structure in a function, written with the help of the page specific variables as defined above. **
 	// [1] Bluetooth headset
@@ -177,8 +176,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	}
 	dataStructure();
 
-
-	// ** Define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
+	// ** Now define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
 
 	// Action list.
 	document.querySelector('.windows-text').addEventListener("click", gtmAddToCart); // Add to cart script.
@@ -194,8 +192,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 		var productsAll = dataStructure(); // Retrieve our data structure, then ..
 		var productsPrimary = productsAll[0]; // .. segment primary product structure ..
-		var productsBluetoothHeadset = productsAll[1]; //.. segment bluetooth headset structure ..
-		var productsPowermic = productsAll[2]; //.. segment powermic structure.
+		var productsBluetoothHeadset = productsAll[1]; // .. segment bluetooth headset structure ..
+		var productsPowermic = productsAll[2]; // .. segment powermic structure.
 
 		// *** Action taken if bluetooth headset added.
 		if ( accessoriesPowermic && accessoriesBluetoothHeadset) {
