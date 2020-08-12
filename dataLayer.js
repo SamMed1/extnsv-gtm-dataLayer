@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	const powermic2          = document.getElementById("powermic2");
 	// [6] Dragon Powermic 3
 	const powermic3          = document.getElementById("powermic3");
+	// [7] Home (Mome page - different to Dragon Home product variation)
+	const home               = document.getElementById("home");
 
 	// [1]
 	if (dragonProfessional) {
@@ -100,9 +102,29 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		var gtm_category = 'Speech Recognition';
 		var gtm_variant  = 'Download';
 
-		// Define variation pid's.
-		var pid_standard     = '5411962900'; // Variation: 9ft.
-		var pid_standard_3ft = '5411962700'; // Variation: 3ft.
+		// Define variation pid's
+		// We have 12 product ID's (PIDS) for the Powermic 3 accessory to account for the different price bands that are determined by user selection of the length of the accessory, the variation, and the quantity.
+
+		var pid_9ft_nondiag_10 = '5411962900'; // 9ft, non diag, 10 or less.
+		var pid_9ft_nondiag_25 = '5412431800'; // 9ft, non diag, 11-25.
+		var pid_9ft_nondiag_50 = '5412432300'; // 9ft, non diag, 26-50.
+
+		var pid_9ft_diag_10    = '5411962800'; // 9ft, diag, 10 or less.
+		var pid_9ft_diag_25    = '5412431700'; // 9ft, diag, 11-25.
+		var pid_9ft_diag_50    = '5412432200'; // 9ft, diag, 26-50.
+
+		var pid_3ft_nondiag_10 = '5411962700'; // 3ft, non diag, 10 or less.
+		var pid_3ft_nondiag_25 = '5412431600'; // 3ft, non diag, 11-25.
+		var pid_3ft_nondiag_50 = '5412432100'; // 3ft, non diag, 26-50.
+
+		var pid_3ft_diag_10    = '5411962600'; // 3ft, diag, 10 or less.
+		var pid_3ft_diag_25    = '5412431500'; // 3ft, diag, 11-25.
+		var pid_3ft_diag_50    = '5412432000'; // 3ft, diag, 26-50.
+	}
+
+	// [7]
+	if (home) {
+		console.log('home');
 	}
 
 
@@ -113,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	// [4] Generate variable for price.
 	// [5] Generate variables for accessories.
 
-	document.addEventListener("mouseup", function () {
+	document.addEventListener("mouseup", function () { //TODO: Why are we calling these like this?
 		checkCurrency();
 		checkVariation();
 		checkQuantity();
@@ -132,23 +154,32 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	// Functionality to detect variation selection and define variable for use in dataLayer.
 	function checkVariation() {
 		// Check the variation containers being used before reading internal value as they slightly differ on each page in older site versions.
-		var variation = document.getElementById("select2-variation-container"); // Class used for the standard products and accessories with a variation selector.
-		var variationDragonHome = document.getElementById("select2-variation-dh-container"); // Dragon Home ID Variation
+		var pageIsHome           = document.getElementById("home");
+		var pageIsHealthcare     = document.getElementById("healthcare");
+		var variation            = document.getElementById("select2-variation-container"); // Class used for the standard products and accessories with a variation selector.
+		var variationDragonHome  = document.getElementById("select2-variation-dh-container"); // Dragon Home ID Variation
 		var variationDragonLegal = document.getElementById("select2-variation-dl-container"); // Dragon Legal ID Variation
-		var variationAccessory = document.getElementsByClassName("variation-grey");
+		var variationAccessory   = document.getElementsByClassName("variation-grey");
+
+		// Get variation selectors for usage when there are multiple product id's (PIDS) for different variations. EG healthcare powermic 3 the pid changes depending on variation and quantity selected.
+		const solutionSelect = document.getElementById('diagnostic');
+		const quantitySelect = document.getElementById('quantity');
 
 		// Check if elements exist, then get the selected product lowercase value for use.
-		if ( variation ) {
-			var variationRendered = document.getElementById("select2-variation-container").textContent;
+		if ( pageIsHome || pageIsHealthcare  ) {
+			var variationRendered = ''; // Save empty variable if page is home page or healthcare home page because there is no buy box selection functionality, and would throw an error if the var is not defined.
+		}
+		else if ( variation ) {
+			var variationRendered = variation.textContent;
 		}
 		else if ( variationDragonHome ) {
-			var variationRendered = document.getElementById("select2-variation-dh-container").textContent;
+			var variationRendered = variationDragonHome.textContent;
 		}
 		else if ( variationDragonLegal ) {
-			var variationRendered = document.getElementById("select2-variation-dl-container").textContent;
+			var variationRendered = variationDragonLegal.textContent;
 		}
 		else if ( variationAccessory ) {
-			var variationRendered = document.getElementsByClassName("variation-grey")[0].textContent;
+			var variationRendered = variationAccessory[0].textContent;
 		}
 
 		var variationRenderedLower = variationRendered.toLowerCase().replace(/\s+/g, ''); // Convert to lowercase string and strip out any empty spaces before using.
@@ -172,13 +203,49 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		} else if (variationRenderedLower == 'withscanner') { // Accessory: Powermic 2 without scanner pid.
 			var gtm_id = pid_standard_scanner;
 		} else if (variationRenderedLower == 'powermic9ftcord') { // Accessory: Powermic 3 9ft.
-			var gtm_id = pid_standard;
+			
+			// If solution selection value is non-diagnostic..
+			if ( solutionSelect.value == 'non-diagnostic' ) {
+				if (quantitySelect.value < 11) { // 9ft, non diag, 10 or less.
+					var gtm_id = pid_9ft_nondiag_10;
+				} else if (quantitySelect.value > 10 && quantitySelect.value < 26) { // 9ft, non diag, 11 - 25.
+					var gtm_id = pid_9ft_nondiag_25;
+				} else if (quantitySelect.value > 25 && quantitySelect.value < 51) { // 9ft, non diag, 26 - 50.
+					var gtm_id = pid_9ft_nondiag_50;
+				}
+			} else { // If solution selection value is diagnostic..
+				if (quantitySelect.value < 11) { // 9ft, diag, 10 or less.
+					var gtm_id = pid_9ft_diag_10;
+				} else if (quantitySelect.value > 10 && quantitySelect.value < 26) { // 9ft, diag, 11 - 25.
+					var gtm_id = pid_9ft_diag_25;
+				} else if (quantitySelect.value > 25 && quantitySelect.value < 51) { // 9ft, diag, 26 - 50.
+					var gtm_id = pid_9ft_diag_50;
+				}
+			}
+
 		} else if (variationRenderedLower == 'powermic3ftcord') { // Accessory: Powermic 3 3ft.
-			var gtm_id = pid_standard_3ft;
+			// If solution selection value is non-diagnostic..
+			if ( solutionSelect.value == 'non-diagnostic' ) {
+				if (quantitySelect.value < 11) { // 3ft, non diag, 10 or less.
+					var gtm_id = pid_3ft_nondiag_10;
+				} else if (quantitySelect.value > 10 && quantitySelect.value < 26) { // 3ft, non diag, 11 - 25.
+					var gtm_id = pid_3ft_nondiag_25;
+				} else if (quantitySelect.value > 25 && quantitySelect.value < 51) { // 3ft, non diag, 26 - 50.
+					var gtm_id = pid_3ft_nondiag_50;
+				}
+			} else { // If solution selection value is non-diagnostic..
+				if (quantitySelect.value < 11) { // 3ft, diag, 10 or less.
+					var gtm_id = pid_3ft_diag_10;
+				} else if (quantitySelect.value > 10 && quantitySelect.value < 26) { // 3ft, diag, 11 - 25.
+					var gtm_id = pid_3ft_diag_25;
+				} else if (quantitySelect.value > 25 && quantitySelect.value < 51) { // 3ft, diag, 26 - 50.
+					var gtm_id = pid_3ft_diag_50;
+				}
+			}
 		} else {
 			var gtm_id = 'outofstock';
 		}
-		 
+		
 		return gtm_id;
 	}
 	checkVariation();
@@ -186,8 +253,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	// [3]
 	// Functionality to detect quantity selection and define variable for use in dataLayer.
 	function checkQuantity() {
-		let gtm_quantity_str = document.getElementById('quantity').value;
-		var gtm_quantity = parseInt(gtm_quantity_str);
+		let gtm_quantity_str = document.getElementById('quantity');
+		if ( gtm_quantity_str ) {
+			var gtm_quantity_value = gtm_quantity_str.value;
+		}
+		var gtm_quantity = parseInt(gtm_quantity_value);
 		return gtm_quantity;
 	}
 	checkQuantity();
@@ -195,7 +265,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	// [4]
 	// Functionality to detect calculated priceand define variable for use in dataLayer.
 	function checkPrice() {
-		var gtm_price = document.getElementsByClassName("value")[0].innerText;
+		var gtm_price_element = document.getElementsByClassName("value")[0];
+		if ( gtm_price_element ) {
+			var gtm_price = gtm_price_element.innerText;
+		}
 		return gtm_price;
 	}
 	checkPrice();
@@ -323,16 +396,26 @@ document.addEventListener("DOMContentLoaded", function (event) {
 	}
 	dataStructure();
 
-	// ** Now define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
-
-	// ** Action list.
+	// ** Action list - Now define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
 	// [1] AddToCart script triggers.
 	// [2] Accessories Checkbox script triggers.
+	// [3] Product view script - triggered on page load.
+	// [4] Product click script - triggered on click of product 'find out more' button on home page.
 
 	// [1]
-	document.querySelector('.bt-buynow').addEventListener("click", gtmAddToCart);
-	document.querySelector('.windows-text').addEventListener("click", gtmAddToCart); // TODO: Delete dummy actions.
-	document.querySelector('.fixed-size').addEventListener("click", gtmAddToCart); // TODO: Delete dummy actions.
+	const buyNowButton = document.querySelector('.bt-buynow');
+	const windowsText  = document.querySelector('.windows-text');
+	const productImage = document.querySelector('.fixed-size');
+
+	if ( buyNowButton ) {
+		buyNowButton.addEventListener("click", gtmAddToCart);
+	}
+	if ( windowsText ) {
+		windowsText.addEventListener("click", gtmAddToCart); // TODO: Delete dummy actions.
+	}
+	if ( productImage ) {
+		productImage.addEventListener("click", gtmAddToCart); // TODO: Delete dummy actions.
+	}
 	
 	// [2]
 	const USBHeadsetCheckbox       = document.querySelector('.usb-head-cb');
@@ -349,26 +432,43 @@ document.addEventListener("DOMContentLoaded", function (event) {
 		powermicCheckbox.addEventListener("click", gtmPowermicCheck); // Trigger PowermicCheck script.
 	}
 
-	// Function list.
-	// [1] gtmAddToCart() - This function handles the retrieval and dataLayer push of the combination of user product selection, at the time of calling.
+	// [3]
+	gtmProductView();
+
+	// [4]
+	const productFindOutMore = document.querySelectorAll('.find-out');
+
+	if ( productFindOutMore ) {
+		productFindOutMore.forEach(item => {
+			item.addEventListener('click', event => {
+				gtmProductClick();
+			})
+		});
+	}
+
+
+	// •• Function list. ••
+	// [1] gtmAddToCart() - This function handles the retrieval and dataLayer push of the combination of user product selection, at the time the the user is directed to the shopping cart page.
 	// [2] checkboxPush(), gtmBluetoothHeadsetCheck(), gtmUSBHeadsetCheck(), gtmPowermicCheck() - These functions push an accessory object to the dataLayer depending on the checkbox selected.
+	// [3] gtmProductView() - This function handles the retrieval and dataLayer push of the product seen at first page view.
+	// [4] gtmProductClick()
 
 	// [1]
 	function gtmAddToCart() {
 
 		// *** Retrieve our dynamic variables from functions outside of block scope. ***
-		var gtm_currencyCode = checkCurrency(); // Retrieve currency code.
+		var gtm_currencyCode            = checkCurrency(); // Retrieve currency code.
 
 		var accessoriesAll              = checkAccessories(); // Retrieve all of our accessory truthy / falsey variables, then ..
 		var accessoriesBluetoothHeadset = accessoriesAll[0]; // .. segment bluetooth headset variable ..
 		var accessoriesUSBHeadset       = accessoriesAll[1]; // .. segment USB headset variable ..
 		var accessoriesPowermic         = accessoriesAll[2]; // .. segment powermic variable.
 
-		var productsAll              = dataStructure(); // Retrieve our data structure, then ..
-		var productsPrimary          = productsAll[0]; // .. segment primary product structure ..
-		var productsBluetoothHeadset = productsAll[1]; // .. segment bluetooth headset structure ..
-		var productsUSBHeadset       = productsAll[2]; // .. segment USB headset structure ..
-		var productsPowermic         = productsAll[3]; // .. segment powermic structure.
+		var productsAll                 = dataStructure(); // Retrieve our data structure, then ..
+		var productsPrimary             = productsAll[0]; // .. segment primary product structure ..
+		var productsBluetoothHeadset    = productsAll[1]; // .. segment bluetooth headset structure ..
+		var productsUSBHeadset          = productsAll[2]; // .. segment USB headset structure ..
+		var productsPowermic            = productsAll[3]; // .. segment powermic structure.
 
 		// *** Combination: Powermic & Bluetooth Headset.
 		if (accessoriesPowermic && accessoriesBluetoothHeadset) {
@@ -485,6 +585,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 	// [2]
 	/**
+	 	Function that is called when a checkbox is checked in order to push the data, passed as parameters, to the dataLayer.
 		* @param {string} currency  The user selected currency at the time of calling the function.
 		* @param {Object} accessory The relevant accessory object as defined in the dataStructure function.
 	*/
@@ -547,4 +648,102 @@ document.addEventListener("DOMContentLoaded", function (event) {
 			checkboxPush(gtm_currencyCode, productsPowermic);
 		}
 	}
+
+	// [3]
+	function gtmProductView() {
+
+		// *** Retrieve our dynamic variables from functions outside of block scope. ***
+		var gtm_currencyCode         = checkCurrency(); // Retrieve currency code.
+		var productsAll              = dataStructure(); // Retrieve our data structure, then ..
+		var productsPrimary          = productsAll[0]; // .. segment primary product structure ..
+
+		dataLayer.push({
+			'ecommerce': {
+				'currencyCode': gtm_currencyCode,
+				'detail': {
+					'products': [
+						productsPrimary
+					]
+				}
+			}
+		});
+		console.log('dataLayer successfully pushed');
+	}
+
+	// [4]
+	function gtmProductClick() {
+		// *** Retrieve our dynamic variables from functions outside of block scope. ***
+		var gtm_currencyCode         = checkCurrency(); // Retrieve currency code.
+		var productsAll              = dataStructure(); // Retrieve our data structure, then ..
+
+		var pageIsHome       = document.getElementById("home");
+		var pageIsHealthcare = document.getElementById("healthcare");
+
+		var parentNode = window.event.target.parentNode;
+		var childNodes = parentNode.childNodes; // Unused variable for de-bugging purposes. Used to view a list of all nodes.
+		var product_title_str = parentNode.childNodes[3].innerText;
+		var product_title = product_title_str.replace(/<br \s*\/?>/gi,' '); // TODO: Need to strip <br> tags.
+		var product_price = parentNode.childNodes[5].innerText.replace(/\W/g, ''); // Strip unwanted characters in order to only return the number value. Note that \W is the equivalent of [^0-9a-zA-Z_].
+
+		if ( pageIsHome ) {
+			if ( product_title.includes('Home') ) {
+				console.log('home');
+				var dataID = '5217991100';
+			}
+			else if ( product_title.includes('Professional') ) {
+				console.log('pro');
+				var dataID = '5065051500';
+			}
+			else if ( product_title.includes('Legal') ) {
+				console.log('legal');
+				var dataID = '5065051500';
+			}
+			else if ( product_title.includes('Anywhere') ) {
+				console.log('anywhere');
+				var dataID = '330332800';
+			}
+		}
+
+		if ( pageIsHealthcare ) {
+			if ( product_title.includes('PowerMic III') ) {
+				console.log('pm3');
+				var dataID = '5411962700';
+			}
+			else if ( product_title.includes('PowerMic II') ) {
+				console.log('pm2');
+				var dataID = '5412502300';
+			}
+			else if ( product_title.includes('Bluetooth') ) {
+				console.log('bhs');
+				var dataID = '307076500';
+			}
+			else if ( product_title.includes('USB') ) {
+				console.log('usb');
+				var dataID = '5412503100';
+			}
+		}
+		
+		dataLayer.push({
+			'event': 'productClick',
+			'ecommerce': {
+			'currencyCode': gtm_currencyCode,
+				'click': {
+					'actionField': {
+						'list': 'Search Results'
+					},
+					'products': [{
+						'name': product_title,
+						'id': dataID,
+						'price': product_price,
+						'brand': 'Dragon',
+						'category': 'Speech Recognition',
+						'variant': 'Download'
+					}]
+				}
+			}
+		});
+
+		console.log('dataLayer successfully pushed');
+	}
+		
 });
