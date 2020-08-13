@@ -502,7 +502,6 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 				}
 			} );
 		}
-
 		// *** Combination: USB & Bluetooth Headset.
 		else if ( accessoriesUSBHeadset && accessoriesBluetoothHeadset ) {
 			dataLayer.push( {
@@ -519,7 +518,6 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 				}
 			} );
 		}
-
 		// *** Combination: USB & Powermic.
 		else if ( accessoriesUSBHeadset && accessoriesPowermic ) {
 			dataLayer.push( {
@@ -536,7 +534,6 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 				}
 			} );
 		}
-
 		// *** Combination: Bluetooth Headset only.
 		else if ( accessoriesBluetoothHeadset ) {
 			dataLayer.push( {
