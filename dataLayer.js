@@ -30,12 +30,25 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	const DRAGON_HOME         = document.getElementById( "dragon-home" );
 	// [3] Dragon Legal page
 	const DRAGON_LEGAL        = document.getElementById( "dragon-legal" );
-	// [4] Dragon Bluetooth Headset
+	// [4] Dragon Anywhere page
+	const DRAGON_ANYWHERE     = document.getElementById( "dragon-anywhere" );
+	// [5] Dragon Bluetooth Headset
 	const BLUETOOTH_HEADSET   = document.getElementById( "bluetooth-headset" );
-	// [5] Dragon Powermic 2
+	// [6] Dragon USB Headset
+	const USB_HEADSET         = document.getElementById( "usb-headset" );
+	// [7] Dragon Powermic 2
 	const POWERMIC_2          = document.getElementById( "powermic2" );
-	// [6] Dragon Powermic 3
+	// [8] Dragon Powermic 3
 	const POWERMIC_3          = document.getElementById( "powermic3" );
+	// [9] Office Runner
+	const OFFICE_RUNNER       = document.getElementById( "office-runner" );
+	// [10] Pocket Memo
+	const POCKET_MEMO         = document.getElementById( "pocket-memo" );
+	// [11] Speech Mike
+	const SPEECH_MIKE         = document.getElementById( "speech-mike" );
+
+	// Secondary static variable to check if page is healthcare page or not. Because healthcare and non-healthcare pages share the same body id, we must do a second check to determine page type.
+	const HEALTHCARE = document.querySelector( ".healthcare" );
 
 	// [1]
 	if ( DRAGON_PROFESSIONAL ) {
@@ -83,18 +96,56 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	}
 
 	// [4]
+	if ( DRAGON_ANYWHERE ) {
+		// Define static variables.
+		gtm_pageName = 'Dragon Anywhere';
+		gtm_brand    = 'Dragon';
+		gtm_category = 'Speech Recognition';
+		gtm_variant  = 'Download';
+
+		// Define variation pid's.
+		pid_standard       = '330332800';
+		var pid_monthly    = '330332600';
+		var pid_free_trial = '330332500';	
+	}
+
+	// [5]
 	if ( BLUETOOTH_HEADSET ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon Bluetooth Headset For Healthcare';
+		gtm_pageName = 'Dragon Bluetooth Headset';
 		gtm_brand    = 'Dragon';
 		gtm_category = 'Speech Recognition';
 		gtm_variant  = 'Download';
 
 		// Define variation pid's.
 		pid_standard = '307076500';
+
+		if ( HEALTHCARE ) {
+			// Redefine healthcare variation variables.
+			gtm_pageName = 'Dragon Bluetooth Headset For Healthcare';
+			pid_standard = '5412503300';
+		}
 	}
 
-	// [5]
+	// [6]
+	if ( USB_HEADSET ) {
+		// Define static variables.
+		gtm_pageName = 'Dragon USB Headset';
+		gtm_brand    = 'Dragon';
+		gtm_category = 'Speech Recognition';
+		gtm_variant  = 'Download';
+
+		// Define variation pid's.
+		pid_standard = '5089594000';
+
+		if ( HEALTHCARE ) {
+			// Redefine healthcare variation variables.
+			gtm_pageName = 'Dragon USB Headset For Healthcare';
+			pid_standard = '5412503100';
+		}
+	}
+
+	// [7]
 	if ( POWERMIC_2 ) {
 		// Define static variables.
 		gtm_pageName = 'Dragon Powermic 2';
@@ -107,7 +158,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		var pid_standard_scanner = '5412503000'; // Variation: with scanner.
 	}
 
-	// [6]
+	// [8]
 	if ( POWERMIC_3 ) {
 		// Define static variables.
 		gtm_pageName = 'Dragon Powermic 3';
@@ -116,23 +167,67 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		gtm_variant  = 'Download';
 
 		// Define variation pid's
+		gtm_pageName           = 'Dragon Powermic 3';
+		var pid_3ft_nondiag_10 = '5056167100'; // 3ft, non diag.
+		var pid_9ft_nondiag_10 = '5056167200'; // 9ft, non diag.
+
+		// Redefine healthcare variation variables.
 		// We have 12 product ID's (PIDS) for the Powermic 3 accessory to account for the different price bands that are determined by user selection of the length of the accessory, the variation, and the quantity.
+		if ( HEALTHCARE ) {
+			gtm_pageName = 'Dragon Powermic 3 For Healthcare';
 
-		var pid_9ft_nondiag_10 = '5411962900'; // 9ft, non diag, 10 or less.
-		var pid_9ft_nondiag_25 = '5412431800'; // 9ft, non diag, 11-25.
-		var pid_9ft_nondiag_50 = '5412432300'; // 9ft, non diag, 26-50.
+			pid_9ft_nondiag_10     = '5411962900'; // 9ft, non diag, 10 or less.
+			var pid_9ft_nondiag_25 = '5412431800'; // 9ft, non diag, 11-25.
+			var pid_9ft_nondiag_50 = '5412432300'; // 9ft, non diag, 26-50.
 
-		var pid_9ft_diag_10 = '5411962800'; // 9ft, diag, 10 or less.
-		var pid_9ft_diag_25 = '5412431700'; // 9ft, diag, 11-25.
-		var pid_9ft_diag_50 = '5412432200'; // 9ft, diag, 26-50.
+			var pid_9ft_diag_10 = '5411962800'; // 9ft, diag, 10 or less.
+			var pid_9ft_diag_25 = '5412431700'; // 9ft, diag, 11-25.
+			var pid_9ft_diag_50 = '5412432200'; // 9ft, diag, 26-50.
 
-		var pid_3ft_nondiag_10 = '5411962700'; // 3ft, non diag, 10 or less.
-		var pid_3ft_nondiag_25 = '5412431600'; // 3ft, non diag, 11-25.
-		var pid_3ft_nondiag_50 = '5412432100'; // 3ft, non diag, 26-50.
+			pid_3ft_nondiag_10     = '5411962700'; // 3ft, non diag, 10 or less.
+			var pid_3ft_nondiag_25 = '5412431600'; // 3ft, non diag, 11-25.
+			var pid_3ft_nondiag_50 = '5412432100'; // 3ft, non diag, 26-50.
 
-		var pid_3ft_diag_10 = '5411962600'; // 3ft, diag, 10 or less.
-		var pid_3ft_diag_25 = '5412431500'; // 3ft, diag, 11-25.
-		var pid_3ft_diag_50 = '5412432000'; // 3ft, diag, 26-50.
+			var pid_3ft_diag_10 = '5411962600'; // 3ft, diag, 10 or less.
+			var pid_3ft_diag_25 = '5412431500'; // 3ft, diag, 11-25.
+			var pid_3ft_diag_50 = '5412432000'; // 3ft, diag, 26-50.
+		}
+	}
+
+	// [9]
+	if ( OFFICE_RUNNER ) {
+		// Define static variables.
+		gtm_pageName = 'Office Runner';
+		gtm_brand    = 'Dragon';
+		gtm_category = 'Speech Recognition';
+		gtm_variant  = 'Download';
+
+		// Define variation pid's.
+		pid_standard = '296778800';
+	}
+
+	// [10]
+	if ( POCKET_MEMO ) {
+		// Define static variables.
+		gtm_pageName = 'Pocket Memo';
+		gtm_brand    = 'Dragon';
+		gtm_category = 'Speech Recognition';
+		gtm_variant  = 'Download';
+
+		// Define variation pid's.
+		pid_standard = '5107012400';
+	}
+
+	// [11]
+	if ( SPEECH_MIKE ) {
+		// Define static variables.
+		gtm_pageName = 'Speech Mike';
+		gtm_brand    = 'Dragon';
+		gtm_category = 'Speech Recognition';
+		gtm_variant  = 'Download';
+
+		// Define variation pid's.
+		pid_standard = '5107012300';
 	}
 
 	// ** Call functions to generate our dynamic variables are calculated depending on user selection, eg price.
@@ -159,12 +254,13 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	 */
 	function checkVariation() {
 		// Check the variation containers being used before reading internal value as they slightly differ on each page in older site versions.
-		let pageIsHome           = document.getElementById( "home" );
-		let pageIsHealthcare     = document.getElementById( "healthcare" );
-		let variation            = document.getElementById( "select2-variation-container" ); // Class used for the standard products and accessories with a variation selector.
-		let variationDragonHome  = document.getElementById( "select2-variation-dh-container" ); // Dragon Home ID Variation
-		let variationDragonLegal = document.getElementById( "select2-variation-dl-container" ); // Dragon Legal ID Variation
-		let variationAccessory   = document.getElementsByClassName( "variation-grey" );
+		let pageIsHome              = document.getElementById( "home" );
+		let pageIsHealthcare        = document.getElementById( "healthcare" );
+		let variation               = document.getElementById( "select2-variation-container" ); // Class used for the standard products and accessories with a variation selector.
+		let variationDragonHome     = document.getElementById( "select2-variation-dh-container" ); // Dragon Home ID Variation
+		let variationDragonLegal    = document.getElementById( "select2-variation-dl-container" ); // Dragon Legal ID Variation
+		let variationDragonAnywhere = document.getElementById( "select2-variation-da-container" ); // Dragon Anywhere ID Variation
+		let variationAccessory      = document.getElementsByClassName( "variation-grey" );
 
 		// Get variation selectors for usage when there are multiple product id's (PIDS) for different variations. EG healthcare powermic 3 the pid changes depending on variation and quantity selected.
 		let solutionSelect = document.getElementById( 'diagnostic' );
@@ -179,6 +275,8 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			variationRendered = variationDragonHome.textContent;
 		} else if ( variationDragonLegal ) {
 			variationRendered = variationDragonLegal.textContent;
+		} else if ( variationDragonAnywhere ) {
+			variationRendered = variationDragonAnywhere.textContent;
 		} else if ( variationAccessory ) {
 			variationRendered = variationAccessory[ 0 ].textContent;
 		}
@@ -197,53 +295,73 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			gtm_id = pid_spanish;
 		} else if ( variationRenderedLower == 'french' ) {
 			gtm_id = pid_french;
+		} else if ( variationRenderedLower == 'yearlysubscription' ) {
+			gtm_id = pid_standard;
+		} else if ( variationRenderedLower == 'monthlysubscription' ) {
+			gtm_id = pid_monthly;
+		} else if ( variationRenderedLower == '1weekfreetrial' ) {
+			gtm_id = pid_free_trial;
 		} else if ( variationRenderedLower == 'bluetoothheadset' ) { // Accessory: Bluetooth headset single pid.
+			gtm_id = pid_standard;
+		} else if ( variationRenderedLower == 'usbheadset' ) { // Accessory: USB headset single pid.
 			gtm_id = pid_standard;
 		} else if ( variationRenderedLower == 'withoutscanner' ) { // Accessory: Powermic 2 with scanner pid.
 			gtm_id = pid_standard;
 		} else if ( variationRenderedLower == 'withscanner' ) { // Accessory: Powermic 2 without scanner pid.
 			gtm_id = pid_standard_scanner;
 		} else if ( variationRenderedLower == 'powermic9ftcord' ) { // Accessory: Powermic 3 9ft.
-
-			// If solution selection value is non-diagnostic..
-			if ( solutionSelect.value == 'non-diagnostic' ) {
-				if ( quantitySelect.value < 11 ) { // 9ft, non diag, 10 or less.
-					gtm_id = pid_9ft_nondiag_10;
-				} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 9ft, non diag, 11 - 25.
-					gtm_id = pid_9ft_nondiag_25;
-				} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 9ft, non diag, 26 - 50.
-					gtm_id = pid_9ft_nondiag_50;
+			if ( HEALTHCARE ) {
+				// If solution selection value is non-diagnostic..
+				if ( solutionSelect.value == 'non-diagnostic' ) {
+					if ( quantitySelect.value < 11 ) { // 9ft, non diag, 10 or less.
+						gtm_id = pid_9ft_nondiag_10;
+					} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 9ft, non diag, 11 - 25.
+						gtm_id = pid_9ft_nondiag_25;
+					} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 9ft, non diag, 26 - 50.
+						gtm_id = pid_9ft_nondiag_50;
+					}
+				} else { // If solution selection value is diagnostic..
+					if ( quantitySelect.value < 11 ) { // 9ft, diag, 10 or less.
+						gtm_id = pid_9ft_diag_10;
+					} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 9ft, diag, 11 - 25.
+						gtm_id = pid_9ft_diag_25;
+					} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 9ft, diag, 26 - 50.
+						gtm_id = pid_9ft_diag_50;
+					}
 				}
-			} else { // If solution selection value is diagnostic..
-				if ( quantitySelect.value < 11 ) { // 9ft, diag, 10 or less.
-					gtm_id = pid_9ft_diag_10;
-				} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 9ft, diag, 11 - 25.
-					gtm_id = pid_9ft_diag_25;
-				} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 9ft, diag, 26 - 50.
-					gtm_id = pid_9ft_diag_50;
-				}
+			} else {
+				gtm_id = pid_9ft_nondiag_10;
 			}
-
 		} else if ( variationRenderedLower == 'powermic3ftcord' ) { // Accessory: Powermic 3 3ft.
-			// If solution selection value is non-diagnostic..
-			if ( solutionSelect.value == 'non-diagnostic' ) {
-				if ( quantitySelect.value < 11 ) { // 3ft, non diag, 10 or less.
-					gtm_id = pid_3ft_nondiag_10;
-				} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 3ft, non diag, 11 - 25.
-					gtm_id = pid_3ft_nondiag_25;
-				} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 3ft, non diag, 26 - 50.
-					gtm_id = pid_3ft_nondiag_50;
+			if ( HEALTHCARE ) {
+				// If solution selection value is non-diagnostic..
+				if ( solutionSelect.value == 'non-diagnostic' ) {
+					if ( quantitySelect.value < 11 ) { // 3ft, non diag, 10 or less.
+						gtm_id = pid_3ft_nondiag_10;
+					} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 3ft, non diag, 11 - 25.
+						gtm_id = pid_3ft_nondiag_25;
+					} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 3ft, non diag, 26 - 50.
+						gtm_id = pid_3ft_nondiag_50;
+					}
+				} else { // If solution selection value is non-diagnostic..
+					if ( quantitySelect.value < 11 ) { // 3ft, diag, 10 or less.
+						gtm_id = pid_3ft_diag_10;
+					} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 3ft, diag, 11 - 25.
+						gtm_id = pid_3ft_diag_25;
+					} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 3ft, diag, 26 - 50.
+						gtm_id = pid_3ft_diag_50;
+					}
 				}
-			} else { // If solution selection value is non-diagnostic..
-				if ( quantitySelect.value < 11 ) { // 3ft, diag, 10 or less.
-					gtm_id = pid_3ft_diag_10;
-				} else if ( quantitySelect.value > 10 && quantitySelect.value < 26 ) { // 3ft, diag, 11 - 25.
-					gtm_id = pid_3ft_diag_25;
-				} else if ( quantitySelect.value > 25 && quantitySelect.value < 51 ) { // 3ft, diag, 26 - 50.
-					gtm_id = pid_3ft_diag_50;
-				}
+			} else {
+				gtm_id = pid_3ft_nondiag_10;
 			}
-		} else {
+		} else if ( variationRenderedLower == 'officerunner' ) { // Accessory: Office Runner.
+			gtm_id = pid_standard;
+		} else if ( variationRenderedLower == 'pocketmemo' ) { // Accessory: Pocket Memo.
+			gtm_id = pid_standard;
+		} else if ( variationRenderedLower == 'speechmike' ) { // Accessory: Speech Mike.
+			gtm_id = pid_standard;
+		}  else {
 			gtm_id = 'outofstock';
 		}
 		return gtm_id;
