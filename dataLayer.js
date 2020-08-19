@@ -46,6 +46,8 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	const POCKET_MEMO         = document.getElementById( "pocket-memo" );
 	// [11] Speech Mike
 	const SPEECH_MIKE         = document.getElementById( "speech-mike" );
+	// [12] Home
+	const HOME                = document.getElementById( "home" );
 
 	// Secondary static variable to check if page is healthcare page or not. Because healthcare and non-healthcare pages share the same body id, we must do a second check to determine page type.
 	const HEALTHCARE = document.querySelector( ".healthcare" );
@@ -530,7 +532,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	// ** Action list - Now define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
 	// [1] AddToCart script triggers.
 	// [2] Accessories Checkbox script triggers.
-	// [3] Product view script - triggered on page load.
+	// [3] Product view script - triggered on page load on all pages apart from home.
 	// [4] Product click script - triggered on click of product 'find out more' button on home page.
 
 	// [1]
@@ -564,13 +566,21 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	}
 
 	// [3]
-	gtmProductView();
+	if ( HOME == null ) {
+		gtmProductView();
+	}
 
 	// [4]
-	const FIND_OUT_MORE_BUTTON = document.querySelectorAll( '.find-out' );
+	const FIND_OUT_MORE_BUTTON = document.querySelectorAll( '.button-blue' );
+	const BOX_SHOT_IMAGE       = document.querySelectorAll( '.home-box-shot-img' );
 
-	if ( FIND_OUT_MORE_BUTTON ) {
+	if ( FIND_OUT_MORE_BUTTON && BOX_SHOT_IMAGE ) {
 		FIND_OUT_MORE_BUTTON.forEach( item => {
+			item.addEventListener( 'click', event => {
+				gtmProductClick();
+			} )
+		} );
+		BOX_SHOT_IMAGE.forEach( item => {
 			item.addEventListener( 'click', event => {
 				gtmProductClick();
 			} )
@@ -819,11 +829,17 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		let pageIsHome       = document.getElementById( "home" );
 		let pageIsHealthcare = document.getElementById( "healthcare" );
 
-		var parentNode        = window.event.target.parentNode;
-		var childNodes        = parentNode.childNodes; // Unused variable for de-bugging purposes. Used to view a list of all nodes.
-		var product_title_str = parentNode.childNodes[ 3 ].innerText;
+		var parent_el       = window.event.target.parentNode;
+		var grandparent_el  = parent_el.parentNode;
+
+		if ( parent_el.classList.contains( "home-box-shot-img" ) ) {
+			grandparent_el  = parent_el.parentNode.parentNode; // Jump up an extra node to target the correct element if the box shot image link is clicked.
+		}
+
+		var childNodes        = grandparent_el.childNodes; // Unused variable for de-bugging purposes. Used to view a list of all nodes.
+		var product_title_str = grandparent_el.childNodes[ 3 ].innerText;
 		var product_title     = product_title_str.replace( /(\r\n|\n|\r)/gm, " " ); // Strip unwanted line breaks.
-		var product_price     = parentNode.childNodes[ 5 ].innerText.replace( /\W/g, '' ).replace(/\D/g,''); // Strip unwanted characters in order to only return the number value. Note that \W is the equivalent of [^0-9a-zA-Z_]. Then strip non-numeric characters to remove currency abbreviations EG 'CAN'.
+		var product_price     = grandparent_el.childNodes[ 5 ].innerText.replace( /\W/g, '' ).replace(/\D/g,''); // Strip unwanted characters in order to only return the number value. Note that \W is the equivalent of [^0-9a-zA-Z_]. Then strip non-numeric characters to remove currency abbreviations EG 'CAN'.
 
 		// *** Set our static variables *** //
 		let eventName = 'productClick';
