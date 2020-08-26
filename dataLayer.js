@@ -240,7 +240,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	// [5] Generate variables for accessories.
 
 	/**
-	 * [1] Functionality to detect calculated priceand define variable for use in dataLayer.
+	 * [1] Functionality to detect currency and define variable for use in dataLayer.
 	 * 
 	 * @returns {string} Return currency value as a string.
 	 */
@@ -616,7 +616,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 
 		// *** Combination: Powermic & Bluetooth Headset.
 		if ( accessoriesPowermic && accessoriesBluetoothHeadset ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -632,7 +632,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: USB & Bluetooth Headset.
 		else if ( accessoriesUSBHeadset && accessoriesBluetoothHeadset ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -648,7 +648,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: USB & Powermic.
 		else if ( accessoriesUSBHeadset && accessoriesPowermic ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -664,7 +664,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: Bluetooth Headset only.
 		else if ( accessoriesBluetoothHeadset ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -679,7 +679,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: USB Headset only.
 		else if ( accessoriesUSBHeadset ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -694,7 +694,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: Powermic only.
 		else if ( accessoriesPowermic ) {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -709,7 +709,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 		// *** Combination: NO ACCESSORIES ADDED.
 		else {
-			dataLayer.push( {
+			dataLayer.push( { // eslint-disable-line no-undef
 				'event': eventName,
 				'ecommerce': {
 					'currencyCode': gtm_currencyCode,
@@ -731,7 +731,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	 * @param {Object} accessory The relevant accessory object as defined in the dataStructure function.
 	*/
 	function checkboxPush( currency, accessory ) {
-		dataLayer.push( {
+		dataLayer.push( { // eslint-disable-line no-undef
 			'event': 'productClick',
 			'ecommerce': {
 				'currencyCode': currency,
@@ -805,7 +805,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		let productsAll      = dataStructure(); // Retrieve our data structure, then ..
 		let productsPrimary  = productsAll[ 0 ]; // .. segment primary product structure ..
 
-		dataLayer.push( {
+		dataLayer.push( { // eslint-disable-line no-undef
 			'ecommerce': {
 				'currencyCode': gtm_currencyCode,
 				'detail': {
@@ -868,7 +868,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			}
 		}
 
-		dataLayer.push( {
+		dataLayer.push( { // eslint-disable-line no-undef
 			'event': eventName,
 			'ecommerce': {
 				'currencyCode': gtm_currencyCode,
