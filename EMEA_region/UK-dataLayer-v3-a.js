@@ -12,7 +12,7 @@
  * Product View
  * Add to shopping cart
  * Accessories checkbox selection.
-
+ *
  * Loaded after functionality scripts in order to read correct variable values and use. EG price calculation, currency selection.
  * The functions necessary for successful push to the dataLayer read the value at the time of calling, of element id's and class names. This means that although written to be used on other locales, the id's and class names must also match.
 */
@@ -21,7 +21,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 
 	// Initialize and Notify script has been loaded successfully.
 	window.dataLayer = window.dataLayer || [];
-	console.log( 'Data layer script loaded successfully' );
+	console.log( 'UK Data layer script loaded successfully' );
 
 	// **  Define static variables to be used by specific pages.
 	// [1] Dragon Professional Individual page
@@ -48,6 +48,8 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	const SPEECH_MIKE         = document.getElementById( "speech-mike" );
 	// [12] Home
 	const HOME                = document.getElementById( "home" );
+	// [13] Dragon Executive USB Headset
+	const EXEC_USB_HEADSET    = document.getElementById( "exec-usb-headset" );
 
 	// Secondary static variable to check if page is healthcare page or not. Because healthcare and non-healthcare pages share the same body id, we must do a second check to determine page type.
 	const HEALTHCARE = document.querySelector( ".healthcare" );
@@ -55,182 +57,192 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	// [1]
 	if ( DRAGON_PROFESSIONAL ) {
 		// Define static variables.
-		var gtm_pageName = 'Dragon Professional Individual 15';
+		var gtm_pageNameVariationStandard = 'Dragon Professional Individual 15 GB EN Digital';
+		var gtm_pageNameVariationWireless = 'Dragon Professional Individual 15 GB EN Wireless Physical';
+		var gtm_pageNameVariationUpgrade  = 'Dragon Professional Individual 15 GB EN Upgrade Digital';
+
 		var gtm_brand    = 'Dragon';
-		var gtm_category = 'Speech Recognition';
-		var gtm_variant  = 'Download';
+		var gtm_category = 'Software';
+		var gtm_variant  = 'Perpetual';
 
 		// Define variation pid's.
-		var pid_standard = '5065051500';
-		var pid_wireless = '5383602700';
-		var pid_upgrade  = '5062971500';
-		var pid_spanish  = '5228063700';
-		var pid_french   = '5228064000';
+		var pid_standard = '5060841900';
+		var pid_wireless = '5063426500';
+		var pid_upgrade  = '5063426300';
 	}
 
 	// [2]
 	if ( DRAGON_HOME ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon Home';
+		gtm_pageNameVariationStandard = 'Dragon Home 15 GB EN Digital';
+		gtm_pageNameVariationWireless = 'Dragon Home 15 GB EN Wireless Digital';
+
 		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+		gtm_category = 'Software';
+		gtm_variant  = 'Perpetual';
 
 		// Define variation pid's.
-		pid_standard = '5217991100';
-		pid_wireless = '5383602000';
-		pid_french   = '5240834400';
-	}
-
-	// [3]
-	if ( DRAGON_LEGAL ) {
-		// Define static variables.
-		gtm_pageName = 'Dragon Legal';
-		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
-
-		// Define variation pid's.
-		pid_standard          = '5062973600';
-		pid_wireless          = '5383602400';
-		pid_upgrade           = '5063131500';
-		var pid_upgrade_legal = '5063131700';
+		pid_standard = '5216761800';
+		pid_wireless = '5363858300';
 	}
 
 	// [4]
 	if ( DRAGON_ANYWHERE ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon Anywhere';
+		gtm_pageNameVariationStandard  = 'Dragon Anywhere GB - New - 12 month';
+		gtm_pageNameVariation1Month    = 'Dragon Anywhere GB - New - 1 month';
+		gtm_pageNameVariationFreeTrial = 'Dragon Anywhere GB - New - 7 day trial';
+
 		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+		gtm_category = 'Software';
+		gtm_variant  = 'Subscription';
 
 		// Define variation pid's.
-		pid_standard       = '330332800';
-		var pid_monthly    = '330332600';
-		var pid_free_trial = '330332500';	
+		pid_standard       = '5290763100';
+		var pid_monthly    = '5290762900';
+		var pid_free_trial = '5290762800';	
 	}
 
 	// [5]
 	if ( BLUETOOTH_HEADSET ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon Bluetooth Headset';
+		gtm_pageName = 'Dragon Bluetooth Headset GB';
 		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+		gtm_category = 'Hardware';
+		gtm_variant  = '0';
 
 		// Define variation pid's.
-		pid_standard = '307076500';
+		pid_standard = '307600100';
 
 		if ( HEALTHCARE ) {
 			// Redefine healthcare variation variables.
-			gtm_pageName = 'Dragon Bluetooth Headset For Healthcare';
-			pid_standard = '5412503300';
+			gtm_pageName = 'NA';
+			pid_standard = 'NA';
 		}
 	}
 
 	// [6]
 	if ( USB_HEADSET ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon USB Headset';
+		gtm_pageName = 'Dragon USB Headset GB';
 		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+		gtm_category = 'Hardware';
+		gtm_variant  = '0';
 
 		// Define variation pid's.
-		pid_standard = '5089594000';
+		pid_standard = '254178900';
 
 		if ( HEALTHCARE ) {
 			// Redefine healthcare variation variables.
-			gtm_pageName = 'Dragon USB Headset For Healthcare';
-			pid_standard = '5412503100';
+			gtm_pageName = 'NA';
+			pid_standard = 'NA';
 		}
-	}
-
-	// [7]
-	if ( POWERMIC_2 ) {
-		// Define static variables.
-		gtm_pageName = 'Dragon Powermic 2';
-		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
-
-		// Define variation pid's.
-		pid_standard             = '5412502300'; // Variation: without scanner.
-		var pid_standard_scanner = '5412503000'; // Variation: with scanner.
 	}
 
 	// [8]
 	if ( POWERMIC_3 ) {
 		// Define static variables.
-		gtm_pageName = 'Dragon Powermic 3';
+		gtm_pageNameVariationStandard = 'Nuance PowerMic III GB 3ft cord';
+		gtm_pageNameVariationLongCord = 'Nuance PowerMic III GB 9ft cord';
+
 		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+		gtm_category = 'Hardware';
+		gtm_variant  = '0';
 
 		// Define variation pid's
 		gtm_pageName           = 'Dragon Powermic 3';
-		var pid_3ft_nondiag_10 = '5056167100'; // 3ft, non diag.
-		var pid_9ft_nondiag_10 = '5056167200'; // 9ft, non diag.
+		var pid_3ft_nondiag_10 = '5075815400'; // 3ft, non diag.
+		var pid_9ft_nondiag_10 = '5075815500'; // 9ft, non diag.
 
 		// Redefine healthcare variation variables.
 		// We have 12 product ID's (PIDS) for the Powermic 3 accessory to account for the different price bands that are determined by user selection of the length of the accessory, the variation, and the quantity.
 		if ( HEALTHCARE ) {
 			gtm_pageName = 'Dragon Powermic 3 For Healthcare';
 
-			pid_9ft_nondiag_10     = '5411962900'; // 9ft, non diag, 10 or less.
-			var pid_9ft_nondiag_25 = '5412431800'; // 9ft, non diag, 11-25.
-			var pid_9ft_nondiag_50 = '5412432300'; // 9ft, non diag, 26-50.
+			pid_9ft_nondiag_10     = 'NA'; // 9ft, non diag, 10 or less.
+			var pid_9ft_nondiag_25 = 'NA'; // 9ft, non diag, 11-25.
+			var pid_9ft_nondiag_50 = 'NA'; // 9ft, non diag, 26-50.
 
-			var pid_9ft_diag_10 = '5411962800'; // 9ft, diag, 10 or less.
-			var pid_9ft_diag_25 = '5412431700'; // 9ft, diag, 11-25.
-			var pid_9ft_diag_50 = '5412432200'; // 9ft, diag, 26-50.
+			var pid_9ft_diag_10 = 'NA'; // 9ft, diag, 10 or less.
+			var pid_9ft_diag_25 = 'NA'; // 9ft, diag, 11-25.
+			var pid_9ft_diag_50 = 'NA'; // 9ft, diag, 26-50.
 
-			pid_3ft_nondiag_10     = '5411962700'; // 3ft, non diag, 10 or less.
-			var pid_3ft_nondiag_25 = '5412431600'; // 3ft, non diag, 11-25.
-			var pid_3ft_nondiag_50 = '5412432100'; // 3ft, non diag, 26-50.
+			pid_3ft_nondiag_10     = 'NA'; // 3ft, non diag, 10 or less.
+			var pid_3ft_nondiag_25 = 'NA'; // 3ft, non diag, 11-25.
+			var pid_3ft_nondiag_50 = 'NA'; // 3ft, non diag, 26-50.
 
-			var pid_3ft_diag_10 = '5411962600'; // 3ft, diag, 10 or less.
-			var pid_3ft_diag_25 = '5412431500'; // 3ft, diag, 11-25.
-			var pid_3ft_diag_50 = '5412432000'; // 3ft, diag, 26-50.
+			var pid_3ft_diag_10 = 'NA'; // 3ft, diag, 10 or less.
+			var pid_3ft_diag_25 = 'NA'; // 3ft, diag, 11-25.
+			var pid_3ft_diag_50 = 'NA'; // 3ft, diag, 26-50.
 		}
 	}
 
-	// [9]
-	if ( OFFICE_RUNNER ) {
-		// Define static variables.
-		gtm_pageName = 'Office Runner';
-		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+	// ** Call functions to generate our static page name variables.
+	// [1] Check version parameter and assign correct value to gtm_pageName.
+	// [2] Call function when user changes variation selection and assign correct value to gtm_pageName.
 
-		// Define variation pid's.
-		pid_standard = '296778800';
+	// [1]
+	const VARIATION_SELECT = document.getElementById( "variation-dh" );
+	if ( VARIATION_SELECT ) {
+		paramCheck();
 	}
 
-	// [10]
-	if ( POCKET_MEMO ) {
-		// Define static variables.
-		gtm_pageName = 'Pocket Memo';
-		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
+	// [2]
+	if ( VARIATION_SELECT ) {
+		VARIATION_SELECT.onchange = function (event) {
+			if ( this.value == "standard" || this.value == "full" ) {
+				gtm_pageName = gtm_pageNameVariationStandard;
+			}
+			if ( this.value == "wireless" ) {
+				gtm_pageName = gtm_pageNameVariationWireless;
+			}
+			if ( this.value == "upgrade" ) {
+				gtm_pageName = gtm_pageNameVariationUpgrade;
+			}
 
-		// Define variation pid's.
-		pid_standard = '5107012400';
+			/* 
+			 * Some pages use numbers as the variation value so we must
+			   account for this, on a page by page basis.
+			 */
+			if ( DRAGON_ANYWHERE ) {
+				if ( this.value == "1" ) {
+					gtm_pageName = gtm_pageNameVariation1Month;
+				}
+				if ( this.value == "3" ) {
+					gtm_pageName = gtm_pageNameVariationStandard;
+				}
+				if ( this.value == "free-trial" ) {
+					gtm_pageName = gtm_pageNameVariationFreeTrial;
+				}
+			}
+			
+			if ( POWERMIC_3 ) {
+				if ( this.value == "1" ) {
+					gtm_pageName = gtm_pageNameVariationStandard;
+				}
+				if ( this.value == "2" ) {
+					gtm_pageName = gtm_pageNameVariationLongCord;
+				}
+			}
+		}
+	};
+
+	/**
+	 * Actions taken when version? parameter is equal to different strings.
+	 */
+	function paramCheck() {
+		var e = getParameterByName( "version" );
+		if ( "" == e || "standard" == e ) {
+			gtm_pageName = gtm_pageNameVariationStandard;
+		}
+		if ( "wireless" == e ) {
+			gtm_pageName = gtm_pageNameVariationWireless;
+		}
+		if ( "upgrade" == e ) {
+			gtm_pageName = gtm_pageNameVariationUpgrade;
+		}
 	}
 
-	// [11]
-	if ( SPEECH_MIKE ) {
-		// Define static variables.
-		gtm_pageName = 'Speech Mike';
-		gtm_brand    = 'Dragon';
-		gtm_category = 'Speech Recognition';
-		gtm_variant  = 'Download';
-
-		// Define variation pid's.
-		pid_standard = '5107012300';
-	}
 
 	// ** Call functions to generate our dynamic variables are calculated depending on user selection, eg price.
 	// [1] Generate variable for currency.
@@ -238,6 +250,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	// [3] Generate variable for quantity.
 	// [4] Generate variable for price.
 	// [5] Generate variables for accessories.
+	// [6] Target Parameter by name
 
 	/**
 	 * [1] Functionality to detect currency and define variable for use in dataLayer.
@@ -262,7 +275,9 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		let variationDragonHome     = document.getElementById( "select2-variation-dh-container" ); // Dragon Home ID Variation
 		let variationDragonLegal    = document.getElementById( "select2-variation-dl-container" ); // Dragon Legal ID Variation
 		let variationDragonAnywhere = document.getElementById( "select2-variation-da-container" ); // Dragon Anywhere ID Variation
+		let outOfStock              = document.getElementById( "oos-email" );
 		let variationAccessory      = document.getElementsByClassName( "variation-grey" );
+		
 
 		// Get variation selectors for usage when there are multiple product id's (PIDS) for different variations. EG healthcare powermic 3 the pid changes depending on variation and quantity selected.
 		let solutionSelect = document.getElementById( 'diagnostic' );
@@ -279,8 +294,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			variationRendered = variationDragonLegal.textContent;
 		} else if ( variationDragonAnywhere ) {
 			variationRendered = variationDragonAnywhere.textContent;
-		} else if ( variationAccessory ) {
+		} else if ( variationAccessory.length > 0 ) {
 			variationRendered = variationAccessory[ 0 ].textContent;
+		} else {
+			variationRendered = 'novariation'
 		}
 
 		var variationRenderedLower = variationRendered.toLowerCase().replace( /\s+/g, '' ); // Convert to lowercase string and strip out any empty spaces before using.
@@ -303,15 +320,15 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			gtm_id = pid_monthly;
 		} else if ( variationRenderedLower == '1weekfreetrial' ) {
 			gtm_id = pid_free_trial;
-		} else if ( variationRenderedLower == 'bluetoothheadset' ) { // Accessory: Bluetooth headset single pid.
+		} else if ( variationRenderedLower == 'bluetoothheadset' || variationRenderedLower == 'bluetooth' ) { // Accessory: Bluetooth headset single pid.
 			gtm_id = pid_standard;
-		} else if ( variationRenderedLower == 'usbheadset' ) { // Accessory: USB headset single pid.
+		} else if ( variationRenderedLower == 'usbheadset' || variationRenderedLower == 'usb' ) { // Accessory: USB headset single pid.
 			gtm_id = pid_standard;
 		} else if ( variationRenderedLower == 'withoutscanner' ) { // Accessory: Powermic 2 with scanner pid.
 			gtm_id = pid_standard;
 		} else if ( variationRenderedLower == 'withscanner' ) { // Accessory: Powermic 2 without scanner pid.
 			gtm_id = pid_standard_scanner;
-		} else if ( variationRenderedLower == 'powermic9ftcord' ) { // Accessory: Powermic 3 9ft.
+		} else if ( variationRenderedLower == 'powermic9ftcord' || variationRenderedLower == '9ftcord' ) { // Accessory: Powermic 3 9ft.
 			if ( HEALTHCARE ) {
 				// If solution selection value is non-diagnostic..
 				if ( solutionSelect.value == 'non-diagnostic' ) {
@@ -334,7 +351,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			} else {
 				gtm_id = pid_9ft_nondiag_10;
 			}
-		} else if ( variationRenderedLower == 'powermic3ftcord' ) { // Accessory: Powermic 3 3ft.
+		} else if ( variationRenderedLower == 'powermic3ftcord' || variationRenderedLower == '3ftcord' ) { // Accessory: Powermic 3 3ft.
 			if ( HEALTHCARE ) {
 				// If solution selection value is non-diagnostic..
 				if ( solutionSelect.value == 'non-diagnostic' ) {
@@ -364,7 +381,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		} else if ( variationRenderedLower == 'speechmike' ) { // Accessory: Speech Mike.
 			gtm_id = pid_standard;
 		}  else {
-			gtm_id = 'outofstock';
+			gtm_id = pid_standard;
 		}
 		return gtm_id;
 	}
@@ -439,15 +456,55 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		}
 
 		// Prices
-		if ( gtm_currencyCode == 'CAD' ) {
+		if ( gtm_currencyCode == 'GBP' ) {
 			if ( bhs ) {
-				var bluetoothHeadsetCost = bhs.getAttribute( "data-cad" );
+				var bluetoothHeadsetCost = bhs.getAttribute( "data-gbp" );
 			}
 			if ( usb ) {
-				var usbHeadsetCost = usb.getAttribute( "data-cad" );
+				var usbHeadsetCost = usb.getAttribute( "data-gbp" );
 			}
 			if ( pm ) {
-				var powermicCost = pm.getAttribute( "data-cad" );
+				var powermicCost = pm.getAttribute( "data-gbp" );
+			}
+		} else if ( gtm_currencyCode == 'EUR' ) {
+			if ( bhs ) {
+				bluetoothHeadsetCost = bhs.getAttribute( "data-euro" );
+			}
+			if ( usb ) {
+				usbHeadsetCost = usb.getAttribute( "data-euro" );
+			}
+			if ( pm ) {
+				powermicCost = pm.getAttribute( "data-euro" );
+			}
+		} else if ( gtm_currencyCode == 'DKK' ) {
+			if ( bhs ) {
+				bluetoothHeadsetCost = bhs.getAttribute( "data-dkk" );
+			}
+			if ( usb ) {
+				usbHeadsetCost = usb.getAttribute( "data-dkk" );
+			}
+			if ( pm ) {
+				powermicCost = pm.getAttribute( "data-dkk" );
+			}
+		} else if ( gtm_currencyCode == 'NOK' ) {
+			if ( bhs ) {
+				bluetoothHeadsetCost = bhs.getAttribute( "data-nok" );
+			}
+			if ( usb ) {
+				usbHeadsetCost = usb.getAttribute( "data-nok" );
+			}
+			if ( pm ) {
+				powermicCost = pm.getAttribute( "data-nok" );
+			}
+		} else if ( gtm_currencyCode == 'SEK' ) {
+			if ( bhs ) {
+				bluetoothHeadsetCost = bhs.getAttribute( "data-sek" );
+			}
+			if ( usb ) {
+				usbHeadsetCost = usb.getAttribute( "data-sek" );
+			}
+			if ( pm ) {
+				powermicCost = pm.getAttribute( "data-sek" );
 			}
 		} else {
 			if ( bhs ) {
@@ -461,6 +518,17 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			}
 		}
 		return [ addBluetoothHeadset, addUSBHeadset, addPowermic, bluetoothHeadsetCost, usbHeadsetCost, powermicCost ];
+	}
+
+	/**
+	 * [6] Target parameter by its name.
+	 * 
+	 * @param {string} e A parameter name, passed in as a string.
+	 */
+	function getParameterByName( e ) {
+		e = e.replace( /[\[]/, "\\[" ).replace( /[\]]/, "\\]" );
+		var r = new RegExp( "[\\?&]" + e + "=([^&#]*)" ).exec( location.search );
+		return null == r ? "" : decodeURIComponent( r[ 1 ].replace( /\+/g, " " ) );
 	}
 
 
@@ -487,30 +555,30 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		// [1]
 		var bluetoothHeadset = {
 			id:       '307076500',
-			name:     'Dragon Bluetooth Wireless Headset',
+			name:     'Dragon Bluetooth Headset GB',
 			price:    bluetoothHeadsetCost,
 			brand:    'Dragon',
-			category: 'Headset',
+			category: 'Hardware',
 			quantity: 1 // The quantity will always be 1 when added to the basket.
 		};
 
 		// [2]
 		var usbHeadset = {
-			id:       '5089594000',
-			name:     'Dragon USB Headset',
+			id:       '254178900',
+			name:     'Dragon USB Headset GB',
 			price:    usbHeadsetCost,
 			brand:    'Dragon',
-			category: 'Headset',
+			category: 'Hardware',
 			quantity: 1 // The quantity will always be 1 when added to the basket.
 		};
 
 		// [3]
 		var powermic = {
-			id:       '5056167100',
-			name:     'PowerMic',
+			id:       '5075815400',
+			name:     'Nuance PowerMic III GB 3ft cord',
 			price:    powermicCost,
 			brand:    'Dragon',
-			category: 'Headset',
+			category: 'Hardware',
 			quantity: 1 // The quantity will always be 1 when added to the basket.
 		};
 
@@ -527,7 +595,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 
 		return [ product, bluetoothHeadset, usbHeadset, powermic ];
 	}
-	dataStructure();
+
+	if ( ! HOME ) {
+		dataStructure();
+	}
 
 	// ** Action list - Now define our action list, then call the relevant functions in order to pass our data to the dataLayer for viewing in GTM and GA. **
 	// [1] AddToCart script triggers.
@@ -544,10 +615,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		BUY_NOW_BUTTON.addEventListener( "click", gtmAddToCart );
 	}
 	// if ( WINDOWS_TEXT ) {
-	// WINDOWS_TEXT.addEventListener( "click", gtmAddToCart ); // Dummy actions for testing purposes.
+	// 	WINDOWS_TEXT.addEventListener( "click", gtmAddToCart ); // Dummy actions for testing purposes.
 	// }
 	// if ( PRODUCT_IMAGE ) {
-	// PRODUCT_IMAGE.addEventListener( "click", gtmAddToCart ); // Dummy actions for testing purposes.
+	// 	PRODUCT_IMAGE.addEventListener( "click", gtmAddToCart ); // Dummy actions for testing purposes.
 	// }
 
 	// [2]
@@ -571,18 +642,37 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 	}
 
 	// [4]
-	const FIND_OUT_MORE_BUTTON = document.querySelectorAll( '.button-blue' );
-	const BOX_SHOT_IMAGE       = document.querySelectorAll( '.home-box-shot-img' );
+	const BUTTON_DRAGON_HOME           = document.querySelectorAll( '.gtm-button-dragon-home' );
+	const BUTTON_DRAGON_PRO            = document.querySelectorAll( '.gtm-button-dragon-pro' );
+	const BUTTON_DRAGON_ANYWHERE       = document.querySelectorAll( '.gtm-button-dragon-anywhere' );
 
-	if ( FIND_OUT_MORE_BUTTON && BOX_SHOT_IMAGE ) {
-		FIND_OUT_MORE_BUTTON.forEach( item => {
+	if ( BUTTON_DRAGON_HOME ) {
+		BUTTON_DRAGON_HOME.forEach( item => {	
 			item.addEventListener( 'click', event => {
-				gtmProductClick();
+				// event.stopPropagation(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// event.preventDefault(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// helper        ' title '      ' id '        'usd', 'cad', 'gbp', 'eur', 'chf', 'dkk', 'nok', 'sek', 'aus', 'nz'
+				gtmProductClick( 'Dragon Home 15 GB EN Digital', '5217991100', '179.99', '', '139.99', '159', '', '1160', '1500', '1650', '', '' );
 			} )
 		} );
-		BOX_SHOT_IMAGE.forEach( item => {
+	}
+	if ( BUTTON_DRAGON_PRO ) {
+		BUTTON_DRAGON_PRO.forEach( item => {	
 			item.addEventListener( 'click', event => {
-				gtmProductClick();
+				// event.stopPropagation(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// event.preventDefault(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// helper        ' title '                         ' id '        'usd', 'cad', 'gbp', 'eur', 'chf', 'dkk', 'nok', 'sek', 'aus', 'nz'
+				gtmProductClick( 'Dragon Professional Individual 15 GB EN Digital', '5065051500', '449.99', '', '349.99', '399', '', '2960', '3680', '3770', '', '' );
+			} )
+		} );
+	}
+	if ( BUTTON_DRAGON_ANYWHERE ) {
+		BUTTON_DRAGON_ANYWHERE.forEach( item => {	
+			item.addEventListener( 'click', event => {
+				// event.stopPropagation(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// event.preventDefault(); // Dummy function for testing purposes in order to view dataLayer push without being redirected.
+				// helper        ' title '          ' id '        'usd', 'cad', 'gbp', 'eur', 'chf', 'dkk', 'nok', 'sek', 'aus', 'nz'
+				gtmProductClick( 'Dragon Anywhere GB - New - 12 month', '330332800', '150', '', '109.99', '150', '', '999', '1299', '1399', '', '' );
 			} )
 		} );
 	}
@@ -820,52 +910,56 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 
 	/**
 	 * [4]
+	 * 
+	 * @param {string} product_title The title of the clicked product, as it should appear in GTM.
+	 * @param {string} product_id The id of the clicked product, as it should appear in GTM.
+	 * @param {string} price_usd The price of the clicked product in the specified currency.
+	 * @param {string} price_cad The price of the clicked product in the specified currency.
+	 * @param {string} price_gbp The price of the clicked product in the specified currency.
+	 * @param {string} price_eur The price of the clicked product in the specified currency.
+	 * @param {string} price_chf The price of the clicked product in the specified currency.
+	 * @param {string} price_dkk The price of the clicked product in the specified currency.
+	 * @param {string} price_nok The price of the clicked product in the specified currency.
+	 * @param {string} price_sek The price of the clicked product in the specified currency.
+	 * @param {string} price_aus The price of the clicked product in the specified currency.
+	 * @param {string} price_nz The price of the clicked product in the specified currency.
 	*/
-	function gtmProductClick() {
+	function gtmProductClick( product_title, product_id, price_usd, price_cad, price_gbp, price_eur, price_chf, price_dkk, price_nok, price_sek, price_aus, price_nz ) {
 		// *** Retrieve our dynamic variables from functions outside of block scope. ***
 		let gtm_currencyCode = checkCurrency(); // Retrieve currency code.
-		let productsAll      = dataStructure(); // Retrieve our data structure, then ..
-
-		let pageIsHome       = document.getElementById( "home" );
-		let pageIsHealthcare = document.getElementById( "healthcare" );
-
-		var parent_el       = window.event.target.parentNode;
-		var grandparent_el  = parent_el.parentNode;
-
-		if ( parent_el.classList.contains( "home-box-shot-img" ) ) {
-			grandparent_el  = parent_el.parentNode.parentNode; // Jump up an extra node to target the correct element if the box shot image link is clicked.
-		}
-
-		var childNodes        = grandparent_el.childNodes; // eslint-disable-line no-unused-vars
-		var product_title_str = grandparent_el.childNodes[ 3 ].innerText;
-		var product_title     = product_title_str.replace( /(\r\n|\n|\r)/gm, " " ); // Strip unwanted line breaks.
-		var product_price     = grandparent_el.childNodes[ 5 ].innerText.replace( /\W/g, '' ).replace(/\D/g,''); // Strip unwanted characters in order to only return the number value. Note that \W is the equivalent of [^0-9a-zA-Z_]. Then strip non-numeric characters to remove currency abbreviations EG 'CAN'.
 
 		// *** Set our static variables *** //
 		let eventName = 'productClick';
-
-		if ( pageIsHome ) {
-			if ( product_title.includes( 'Home' ) ) {
-				var dataID = '5217991100';
-			} else if ( product_title.includes( 'Professional' ) ) {
-				dataID = '5065051500';
-			} else if ( product_title.includes( 'Legal' ) ) {
-				dataID = '5065051500';
-			} else if ( product_title.includes( 'Anywhere' ) ) {
-				dataID = '330332800';
-			}
+		
+		if ( gtm_currencyCode == 'USD') {
+			product_price = price_usd;
 		}
-
-		if ( pageIsHealthcare ) {
-			if ( product_title.includes( 'PowerMic III' ) ) {
-				dataID = '5411962700';
-			} else if ( product_title.includes( 'PowerMic II' ) ) {
-				dataID = '5412502300';
-			} else if ( product_title.includes( 'Bluetooth' ) ) {
-				dataID = '307076500';
-			} else if ( product_title.includes( 'USB' ) ) {
-				dataID = '5412503100';
-			}
+		if ( gtm_currencyCode == 'CAD') {
+			product_price = price_cad;
+		}
+		if ( gtm_currencyCode == 'GBP') {
+			product_price = price_gbp;
+		}
+		if ( gtm_currencyCode == 'EUR') {
+			product_price = price_eur;
+		}
+		if ( gtm_currencyCode == 'CHF') {
+			product_price = price_chf;
+		}
+		if ( gtm_currencyCode == 'DKK') {
+			product_price = price_dkk;
+		}
+		if ( gtm_currencyCode == 'NOK') {
+			product_price = price_nok;
+		}
+		if ( gtm_currencyCode == 'SEK') {
+			product_price = price_sek;
+		}
+		if ( gtm_currencyCode == 'AUD') {
+			product_price = price_aus;
+		}
+		if ( gtm_currencyCode == 'NZD') {
+			product_price = price_nz;
 		}
 
 		dataLayer.push( { // eslint-disable-line no-undef
@@ -878,7 +972,7 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 					},
 					'products': [ {
 						'name': product_title,
-						'id': dataID,
+						'id': product_id,
 						'price': product_price,
 						'brand': 'Dragon',
 						'category': 'Speech Recognition',
@@ -889,4 +983,5 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		} );
 		console.log( 'dataLayer successfully pushed' );
 	}
+
 } );
