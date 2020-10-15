@@ -136,8 +136,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		 */
 		function splitToChunks( array, parts ) {
 			let result = [];
+			let newArr = []; // We need to create a new array so we dont affect the original utag_data data.
+			newArr.push.apply( newArr, array );
 			for ( let i = parts; i > 0; i-- ) {
-				result.push( array.splice( 0, Math.ceil( array.length / i ) ) );
+				result.push( newArr.splice( 0, Math.ceil( newArr.length / i ) ) );
 			}
 			return result;
 		}
@@ -331,7 +333,9 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			'ecommerce': {
 				'checkout': {
 					'currencyCode': gtm_currencyCode,
-					'actionField': {'step': 2, 'option': 'paymentDetail'}
+					'actionField': {
+						'step': 1,
+						'option': 'cartBilling'}
 				}
 			}
 		} );
@@ -354,7 +358,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 			'ecommerce': {
 				'checkout': {
 					'currencyCode': gtm_currencyCode,
-					'actionField': {'step': 3, 'option': 'orderSummary'}
+					'actionField': {
+						'step': 2,
+						'option': 'orderSummary'
+					}
 				}
 			}
 		} );
@@ -393,8 +400,10 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 		 */
 		function splitToChunks( array, parts ) {
 			let result = [];
+			let newArr = []; // We need to create a new array so we dont affect the original utag_data data.
+			newArr.push.apply( newArr, array );
 			for ( let i = parts; i > 0; i-- ) {
-				result.push( array.splice( 0, Math.ceil( array.length / i ) ) );
+				result.push( newArr.splice( 0, Math.ceil( newArr.length / i ) ) );
 			}
 			return result;
 		}
@@ -492,6 +501,8 @@ document.addEventListener( "DOMContentLoaded", function ( event ) {
 				'currencyCode': gtm_currencyCode,
 				'purchase': {
 					'actionField': {
+						'step': 3,
+						'option': 'orderConfirmation',
 						'id': orderid,
 						'revenue': orderrevenue,
 						'tax': ordertax,
